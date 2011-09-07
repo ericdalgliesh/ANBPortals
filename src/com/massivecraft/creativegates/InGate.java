@@ -159,10 +159,10 @@ public class InGate extends Entity implements Comparable<InGate>
 			frameDirIsNS = false;
 		}
 
-// Find the frame blocks and materials
+    // Find the frame blocks and materials
 		Set<Block> frameBlocks = new HashSet<Block>();
 
-    /* Set<BlockFace> expandFaces = frameDirIsNS ? expandFacesNS : expandFacesWE;
+     Set<BlockFace> expandFaces = frameDirIsNS ? expandFacesNS : expandFacesWE;
      for (Block currentBlock : contentBlocks)
      {
        for (BlockFace face : expandFaces)
@@ -174,7 +174,7 @@ public class InGate extends Entity implements Comparable<InGate>
          }
        }
      }
-		*/
+		
 		// Now we add the frame and content blocks as world coords to the lookup maps.
 		for (Block frameBlock : frameBlocks)
 		{
@@ -364,6 +364,8 @@ public class InGate extends Entity implements Comparable<InGate>
     if(contentCoords == null || contentCoords.isEmpty())
     {
       this.dataPopulate();
+      if(this.isOpen()) fill();
+      else empty();
     }
     return contentCoords;
   }

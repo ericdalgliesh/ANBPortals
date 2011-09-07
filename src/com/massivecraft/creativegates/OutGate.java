@@ -174,6 +174,19 @@ public class OutGate extends Entity implements Comparable<OutGate>
 		// Find the frame blocks and materials
 		Set<Block> frameBlocks = new HashSet<Block>();
 
+     Set<BlockFace> expandFaces = frameDirIsNS ? expandFacesNS : expandFacesWE;
+     for (Block currentBlock : contentBlocks)
+     {
+       for (BlockFace face : expandFaces)
+       {
+         Block potentialBlock = currentBlock.getRelative(face);
+         if ( ! contentBlocks.contains(potentialBlock))
+         {
+           frameBlocks.add(potentialBlock);
+         }
+       }
+     }
+
 		
 		// Now we add the frame and content blocks as world coords to the lookup maps.
 		for (Block frameBlock : frameBlocks)
@@ -415,6 +428,8 @@ public class OutGate extends Entity implements Comparable<OutGate>
     if(contentCoords == null || contentCoords.isEmpty())
     {
       this.dataPopulate();
+      if(this.isOpen()) fill();
+      else empty();
     }
     return contentCoords;
   }

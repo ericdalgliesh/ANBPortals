@@ -33,7 +33,7 @@ public class InGates extends EntityCollection<InGate>
 			new File(CreativeGates.p.getDataFolder(), "ingates.json"),
 			CreativeGates.p.gson
 		);
-//    this.loadFromDisc();
+    this.loadFromDisc();
 	}
 	
 	@Override
@@ -108,7 +108,7 @@ public class InGates extends EntityCollection<InGate>
 		{
 			gate.empty();
 		}
-//    this.saveToDisc();
+    this.saveToDisc();
 	}
 	
 	public void openAllOrDetach()
@@ -125,7 +125,7 @@ public class InGates extends EntityCollection<InGate>
 				p.log(e.getMessage() + " Gate was removed.");
 			}
 		}
-//    this.saveToDisc();
+    this.saveToDisc();
 	}
 	
 	// -------------------------------------------- //
@@ -147,7 +147,7 @@ public class InGates extends EntityCollection<InGate>
 			{
 				gate.informPlayer(player);
 			}
-//      this.saveToDisc();
+      this.saveToDisc();
 			return gate;
 		}
 		catch (GateOpenException e)
@@ -160,7 +160,7 @@ public class InGates extends EntityCollection<InGate>
 			{
 				player.sendMessage(e.getMessage());
 			}
-//      this.saveToDisc();
+      this.saveToDisc();
 			return null;
 		}
 	}
