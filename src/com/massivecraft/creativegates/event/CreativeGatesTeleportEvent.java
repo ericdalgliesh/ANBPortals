@@ -13,16 +13,16 @@ public class CreativeGatesTeleportEvent extends Event implements Cancellable
 {
     
     private Location location;
-    private Set<Material> materials;
+    private Iterable<Integer> key;
     private boolean cancelled;
     private PlayerMoveEvent event;
 
-    public CreativeGatesTeleportEvent(PlayerMoveEvent event, Location location, Set<Material> materials)
+    public CreativeGatesTeleportEvent(PlayerMoveEvent event, Location location, Iterable<Integer> key)
     {
         super("CreativeGatesTeleportEvent");
         this.event = event;
         this.location = location;
-        this.materials = materials;
+        this.key = key;
         this.cancelled = false;
     }
     
@@ -46,9 +46,9 @@ public class CreativeGatesTeleportEvent extends Event implements Cancellable
         this.location = location;
     }
     
-    public Set<Material> getMaterials()
+    public Iterable<Integer> getKey()
     {
-        return this.materials;
+        return this.key;
     }
     
     public PlayerMoveEvent getPlayerMoveEvent()

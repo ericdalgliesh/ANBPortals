@@ -7,10 +7,11 @@ import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import com.massivecraft.creativegates.Gate;
+import com.massivecraft.creativegates.InGate;
 import com.massivecraft.creativegates.CreativeGates;
-import com.massivecraft.creativegates.Gates;
-import com.massivecraft.creativegates.Permission;
+import com.massivecraft.creativegates.InGates;
+import com.massivecraft.creativegates.OutGate;
+import com.massivecraft.creativegates.OutGates;
 
 
 public class PluginBlockListener extends BlockListener
@@ -27,7 +28,7 @@ public class PluginBlockListener extends BlockListener
 		
 		for (Block block : event.getBlocks())
 		{
-			if (Gates.i.findFrom(block) != null)
+			if (InGates.i.findFrom(block) != null || OutGates.i.findFrom(block) != null)
 			{
 				event.setCancelled(true);
 				return;
@@ -39,7 +40,8 @@ public class PluginBlockListener extends BlockListener
 	public void onBlockFromTo(BlockFromToEvent event)
 	{
 		if (event.isCancelled()) return;
-		
+
+
 		Block blockFrom = event.getBlock();
 		boolean isWater = blockFrom.getTypeId() == 9;
 		
@@ -47,8 +49,13 @@ public class PluginBlockListener extends BlockListener
 		{
 			return;
 		}
-		
-		if (Gates.i.findFrom(blockFrom) != null)
+
+		if (InGates.i.findFrom(blockFrom) != null)
+		{
+			event.setCancelled(true);
+		}
+
+		if (OutGates.i.findFrom(blockFrom) != null)
 		{
 			event.setCancelled(true);
 		}
@@ -60,11 +67,11 @@ public class PluginBlockListener extends BlockListener
 	{
 		if (event.isCancelled()) return;
 		
-		Gate gate = Gates.i.findFromContent(event.getBlock()); 
-		if (gate != null)
-		{
+		if (InGates.i.findFromContent(event.getBlock()) != null)
 			event.setCancelled(true);
-		}
+
+    if (OutGates.i.findFromContent(event.getBlock()) != null)
+			event.setCancelled(true);
 	}
 	
 	// Is the player allowed to destroy gates?
@@ -72,17 +79,12 @@ public class PluginBlockListener extends BlockListener
 	public void onBlockBreak(BlockBreakEvent event)
 	{
 		if (event.isCancelled()) return;
-		
-		Gate gate = Gates.i.findFromFrame(event.getBlock());
-		if (gate == null)
-		{
-			return;
-		}
-		
-		// A player is attempting to destroy a gate. Can he?
-		if ( ! Permission.DESTROY.test(event.getPlayer()))
-		{
+
+		if (InGates.i.findFromContent(event.getBlock()) != null)
 			event.setCancelled(true);
-		}
+
+    if (OutGates.i.findFromContent(event.getBlock()) != null)
+			event.setCancelled(true);
+		
 	}
 }

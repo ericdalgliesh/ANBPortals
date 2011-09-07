@@ -4,9 +4,11 @@ import org.bukkit.Material;
 
 public class Conf
 {	
-	public static int wand = Material.WATCH.getId();
-	public static int block = Material.DIAMOND_BLOCK.getId();
+	public static int wand = Material.COMPASS.getId();
+	public static int inBlock = Material.GOLD_BLOCK.getId();
+	public static int outBlock = Material.IRON_BLOCK.getId();
 	public static int maxarea = 200;
+  public static int keyStart = Material.GLOWSTONE.getId();
 	
 	public static transient Conf i = new Conf();
 	

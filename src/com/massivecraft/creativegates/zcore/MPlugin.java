@@ -17,7 +17,6 @@ import com.google.gson.reflect.TypeToken;
 import com.massivecraft.creativegates.zcore.persist.EM;
 import com.massivecraft.creativegates.zcore.persist.SaveTask;
 import com.massivecraft.creativegates.zcore.util.LibLoader;
-import com.massivecraft.creativegates.zcore.util.PermUtil;
 import com.massivecraft.creativegates.zcore.util.Persist;
 import com.massivecraft.creativegates.zcore.util.TextUtil;
 
@@ -32,7 +31,6 @@ public abstract class MPlugin extends JavaPlugin
 	public Persist persist;
 	public TextUtil txt;
 	public LibLoader lib;
-	public PermUtil perm;
 	
 	public Gson gson;	
 	
@@ -49,9 +47,9 @@ public abstract class MPlugin extends JavaPlugin
 		
 		// Ensure basefolder exists!
 		this.getDataFolder().mkdirs();
+    log(getDataFolder());
 		
 		// Create Utility Instances
-		this.perm = new PermUtil(this);
 		this.persist = new Persist(this);
 		this.lib = new LibLoader(this);
 		

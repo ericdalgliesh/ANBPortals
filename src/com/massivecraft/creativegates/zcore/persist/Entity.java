@@ -1,12 +1,7 @@
 package com.massivecraft.creativegates.zcore.persist;
 
 public abstract class Entity
-{
-	public Entity()
-	{
-	
-	}
-	
+{	
 	protected transient String id = null;
 	
 	public String getId()

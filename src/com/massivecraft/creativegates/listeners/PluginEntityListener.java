@@ -5,7 +5,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityListener;
 
 import com.massivecraft.creativegates.CreativeGates;
-import com.massivecraft.creativegates.Gates;
+import com.massivecraft.creativegates.InGates;
 
 public class PluginEntityListener extends EntityListener {
 	
@@ -19,7 +19,7 @@ public class PluginEntityListener extends EntityListener {
 		
 		for (Block block : event.blockList())
 		{
-			if (Gates.i.findFrom(block) != null)
+			if (InGates.i.findFrom(block) != null)
 			{
 				event.setCancelled(true);
 				return;

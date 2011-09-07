@@ -2,9 +2,6 @@ package com.massivecraft.creativegates.zcore.persist;
 
 import java.util.*;
 
-import com.massivecraft.creativegates.zcore.persist.Entity;
-import com.massivecraft.creativegates.zcore.persist.EntityCollection;
-
 public class EM
 {
 	private static Map<Class<? extends Entity>, EntityCollection<? extends Entity>> class2Entities = new LinkedHashMap<Class<? extends Entity>, EntityCollection<? extends Entity>>();

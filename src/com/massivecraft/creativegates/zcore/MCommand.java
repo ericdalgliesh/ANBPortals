@@ -5,8 +5,6 @@ import java.util.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.massivecraft.creativegates.zcore.MCommand;
-import com.massivecraft.creativegates.zcore.MPlugin;
 import com.massivecraft.creativegates.zcore.util.TextUtil;
 
 
@@ -139,7 +137,7 @@ public abstract class MCommand
 	
 	public boolean validatePermissions()
 	{
-		return p.perm.test(this.sender, this.permission);
+		return true;
 	};
 	
 	public boolean validateParameters()

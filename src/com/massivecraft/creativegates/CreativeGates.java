@@ -36,8 +36,9 @@ public class CreativeGates extends MPlugin
 		// TODO fix config auto update routine... ?
 		Conf.load();
 		
-		Gates.i.loadFromDisc();
-		Gates.i.openAllOrDetach();
+		InGates.i.loadFromDisc();
+    OutGates.i.loadFromDisc();
+		InGates.i.openAllOrDetach();
 		
 		// Register events
 		PluginManager pm = this.getServer().getPluginManager();
@@ -61,7 +62,8 @@ public class CreativeGates extends MPlugin
 	
 	public void onDisable()
 	{
-		Gates.i.emptyAll();
+		InGates.i.emptyAll();
+    OutGates.i.emptyAll();
 	}
 	
 	// -------------------------------------------- //

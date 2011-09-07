@@ -14,12 +14,14 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.massivecraft.creativegates.Conf;
-import com.massivecraft.creativegates.Gate;
+import com.massivecraft.creativegates.InGate;
 import com.massivecraft.creativegates.CreativeGates;
-import com.massivecraft.creativegates.Gates;
-import com.massivecraft.creativegates.Permission;
+import com.massivecraft.creativegates.InGates;
+import com.massivecraft.creativegates.OutGate;
+import com.massivecraft.creativegates.OutGates;
 import com.massivecraft.creativegates.WorldCoord;
 import com.massivecraft.creativegates.event.CreativeGatesTeleportEvent;
+import java.util.List;
 
 public class PluginPlayerListener extends PlayerListener
 {
@@ -38,7 +40,7 @@ public class PluginPlayerListener extends PlayerListener
 		if (blockToTest.getType() != Material.STATIONARY_WATER) return;
 		
 		// Find the gate if there is one
-		Gate gateFrom = Gates.i.findFromContent(blockToTest);
+		InGate gateFrom = InGates.i.findFromContent(blockToTest);
 		if (gateFrom == null) return;
 		
 		// Is the gate intact?
@@ -48,24 +50,24 @@ public class PluginPlayerListener extends PlayerListener
 			return;
 		}
 		
-		// Can the player use gates?
-		if ( ! Permission.USE.test(event.getPlayer())) return;
-		
 		// Find the target location
-		Location targetLocation = gateFrom.getMyTargetExitLocation();
+    List<Integer> fromKey = gateFrom.getKey();
+    OutGate destination = OutGates.i.findByKey(fromKey);
+
+    if (destination == null)
+    {
+			event.getPlayer().sendMessage("No destination gate.");
+			return;
+    }
+    
+    Location targetLocation = destination.getMyOwnExitLocation();
 		if (targetLocation == null)
 		{
 			event.getPlayer().sendMessage(p.txt.get("usefail.no_target_location"));
 			return;
 		}
 		
-		HashSet<Material> frameMaterials = new HashSet<Material>();
-		for(int id : gateFrom.frameMaterialIds)
-		{
-		    frameMaterials.add(Material.getMaterial(id));
-		}
-		
-		CreativeGatesTeleportEvent gateevent = new CreativeGatesTeleportEvent(event, targetLocation, frameMaterials);
+		CreativeGatesTeleportEvent gateevent = new CreativeGatesTeleportEvent(event, targetLocation, destination.getKey());
 		p.getServer().getPluginManager().callEvent(gateevent);
 	}
 	
@@ -88,22 +90,28 @@ public class PluginPlayerListener extends PlayerListener
 		
 		// Did we hit an existing gate?
 		// In such case send information.
-		Gate gate = Gates.i.findFrom(clickedBlock);
+		InGate gate = InGates.i.findFrom(clickedBlock);
 		if (gate != null)
 		{
 			gate.informPlayer(player);
 			return;
 		}
+
+    OutGate outGate = OutGates.i.findFrom(clickedBlock);
+    if (outGate != null)
+    {
+      outGate.informPlayer(player);
+      return;
+    }
 		
-		// Did we hit a diamond block?
-		if (clickedBlock.getTypeId() == Conf.block)
+		if (clickedBlock.getTypeId() == Conf.inBlock)
 		{
-			// create a gate if the player has the permission
-			if (Permission.CREATE.test(player))
-			{
-				Gates.i.open(new WorldCoord(clickedBlock), player);
-			}
+      InGates.i.open(new WorldCoord(clickedBlock), player);
 		}
+    else if (clickedBlock.getTypeId() == Conf.outBlock)
+    {
+      OutGates.i.open(new WorldCoord(clickedBlock), player);
+    }
 	}
 	
 	@Override
@@ -114,7 +122,11 @@ public class PluginPlayerListener extends PlayerListener
 			return;
 		}
 		
-		if ( Gates.i.findFromContent(event.getBlockClicked()) != null )
+		if ( InGates.i.findFromContent(event.getBlockClicked()) != null )
+		{
+			event.setCancelled(true);
+		}
+		if ( OutGates.i.findFromContent(event.getBlockClicked()) != null )
 		{
 			event.setCancelled(true);
 		}
@@ -128,7 +140,11 @@ public class PluginPlayerListener extends PlayerListener
 			return;
 		}
 		
-		if ( Gates.i.findFromContent(event.getBlockClicked().getRelative(event.getBlockFace())) != null )
+		if ( InGates.i.findFromContent(event.getBlockClicked().getRelative(event.getBlockFace())) != null )
+		{
+			event.setCancelled(true);
+		}
+		if ( OutGates.i.findFromContent(event.getBlockClicked().getRelative(event.getBlockFace())) != null )
 		{
 			event.setCancelled(true);
 		}
