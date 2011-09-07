@@ -133,10 +133,6 @@ public class OutGate extends Entity implements Comparable<OutGate>
 		
 		// Search for content WE and NS
 		Block floodStartBlock = sourceBlock.getRelative(BlockFace.UP);
-		List<Integer> populateKey =  populateKeys(floodStartBlock);
-    if(populateKey == null || populateKey.size() < 3 || populateKey.get(0) != Conf.keyStart)
-      return false;
-    key = populateKey;
 
     Set<Block> contentBlocksWE = getFloodBlocks(floodStartBlock, new HashSet<Block>(), expandFacesWE);
 		Set<Block> contentBlocksNS = getFloodBlocks(floodStartBlock, new HashSet<Block>(), expandFacesNS);
@@ -182,6 +178,7 @@ public class OutGate extends Entity implements Comparable<OutGate>
          Block potentialBlock = currentBlock.getRelative(face);
          if ( ! contentBlocks.contains(potentialBlock))
          {
+           if(potentialBlock.getTypeId() != Conf.outBlock) return false;
            frameBlocks.add(potentialBlock);
          }
        }
@@ -197,7 +194,12 @@ public class OutGate extends Entity implements Comparable<OutGate>
 		{
 			this.contentCoords.add(new WorldCoord(contentBlock));
 		}
-		
+
+		List<Integer> populateKey =  populateKeys(floodStartBlock);
+    if(populateKey == null || populateKey.size() < 3 || populateKey.get(0) != Conf.keyStart)
+      return false;
+    key = populateKey;
+    
 		return true; 
 	}
 

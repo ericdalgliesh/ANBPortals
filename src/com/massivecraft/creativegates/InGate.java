@@ -121,10 +121,6 @@ public class InGate extends Entity implements Comparable<InGate>
 		
 		// Search for content WE and NS
 		Block floodStartBlock = sourceBlock.getRelative(BlockFace.UP);
-		List<Integer> populateKey =  populateKeys(floodStartBlock);
-    if(populateKey == null || populateKey.size() < 3 || populateKey.get(0) != Conf.keyStart)
-      return false;
-    key = populateKey;
 
 		Set<Block> contentBlocksWE = getFloodBlocks(floodStartBlock, new HashSet<Block>(), expandFacesWE);
 		Set<Block> contentBlocksNS = getFloodBlocks(floodStartBlock, new HashSet<Block>(), expandFacesNS);
@@ -170,6 +166,7 @@ public class InGate extends Entity implements Comparable<InGate>
          Block potentialBlock = currentBlock.getRelative(face);
          if ( ! contentBlocks.contains(potentialBlock))
          {
+           if(potentialBlock.getTypeId() != Conf.inBlock) return false;
            frameBlocks.add(potentialBlock);
          }
        }
@@ -184,7 +181,12 @@ public class InGate extends Entity implements Comparable<InGate>
 		{
 			this.contentCoords.add(new WorldCoord(contentBlock));
 		}
-		
+
+		List<Integer> populateKey =  populateKeys(floodStartBlock);
+    if(populateKey == null || populateKey.size() < 3 || populateKey.get(0) != Conf.keyStart)
+      return false;
+    key = populateKey;
+    
 		return true; 
 	}
 
