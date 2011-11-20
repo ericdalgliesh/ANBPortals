@@ -1,5 +1,5 @@
 main: com.massivecraft.creativegates.CreativeGates
-name: CreativeGates
+name: ANBPortals
 version: 1.2
 softdepend: [DimensionDoor, MultiVerse, WorldManager]
 permissions:

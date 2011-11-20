@@ -4,7 +4,9 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
 import com.massivecraft.creativegates.listeners.*;
+import com.massivecraft.creativegates.tasks.SpawnAnimalsTask;
 import com.massivecraft.creativegates.zcore.*;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class CreativeGates extends MPlugin
 {
@@ -34,7 +36,7 @@ public class CreativeGates extends MPlugin
 		if ( ! preEnable()) return;
 		
 		// TODO fix config auto update routine... ?
-		Conf.load();
+		/*Conf.load();
 		
 		InGates.i.loadFromDisc();
     OutGates.i.loadFromDisc();
@@ -56,7 +58,10 @@ public class CreativeGates extends MPlugin
 		pm.registerEvent(Event.Type.ENTITY_EXPLODE, this.entityListener, Event.Priority.Normal, this);
 		
 		pm.registerEvent(Event.Type.CUSTOM_EVENT, this.gateListener, Event.Priority.Monitor, this);
-		
+		*/
+    BukkitScheduler scheduler = this.getServer().getScheduler();
+    scheduler.scheduleAsyncRepeatingTask(this, new SpawnAnimalsTask(p), 1, 100); // check every 1/10s
+
 		postEnable();
 	}
 	
@@ -88,5 +93,5 @@ public class CreativeGates extends MPlugin
 		this.tags.put("i", "§b");
 		this.tags.put("h", "§a");
 	}
-	
+
 }

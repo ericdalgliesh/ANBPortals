@@ -1,6 +1,11 @@
 ANBPortals (forked from Creative Gates)
 ====================
 
+Building
+----------
+After building, you may need to manually add the plugin.yml file to the jar. Use
+"jar uf ANBPortals.jar plugin.yml" to do this
+
 Installing
 ----------
 Put the latest jar in your plugins folder.
