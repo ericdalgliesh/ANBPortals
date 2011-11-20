@@ -60,7 +60,7 @@ public class CreativeGates extends MPlugin
 		pm.registerEvent(Event.Type.CUSTOM_EVENT, this.gateListener, Event.Priority.Monitor, this);
 		*/
     BukkitScheduler scheduler = this.getServer().getScheduler();
-    scheduler.scheduleAsyncRepeatingTask(this, new SpawnAnimalsTask(p), 1, 100); // check every 1/10s
+    scheduler.scheduleAsyncRepeatingTask(this, new SpawnAnimalsTask(p), 1, 300); // check every 1/10s
 
 		postEnable();
 	}

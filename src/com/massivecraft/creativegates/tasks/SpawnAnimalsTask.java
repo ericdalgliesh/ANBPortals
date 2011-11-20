@@ -23,7 +23,7 @@ public class SpawnAnimalsTask implements Runnable {
 
   public void run() {
     long time = System.currentTimeMillis();
-    if (System.currentTimeMillis() < lastRun.get() +  60 * 1000) { // only run every 1 min, even if invoked
+    if (System.currentTimeMillis() < lastRun.get() +  3 * 60 * 1000) { // only run every 3 mins, even if invoked
       return;
     }
     lastRun.set(System.currentTimeMillis()); // do it at the start to more accurately hit the time.
